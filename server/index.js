@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const setUp = async (settings) => {
-  const { url } = settings;
+  const { target } = settings;
 
   const browser = await puppeteer.launch({
       headless: true
@@ -16,7 +16,7 @@ const setUp = async (settings) => {
 
   await webPage.setViewport({ width: 1440, height: 800 });
 
-  await webPage.goto(url, {
+  await webPage.goto(target, {
       waitUntil: "networkidle0"
   });
 
@@ -27,7 +27,7 @@ const setUp = async (settings) => {
 app.get("/pdf", async (req, res) => {
   try {
 
-    const { browser, webPage } = setUp(req.query)
+    const { browser, webPage } = await setUp(req.query)
 
     const pdf = await webPage.pdf({
         printBackground: true,
@@ -58,7 +58,7 @@ app.get("/pdf", async (req, res) => {
 app.get("/img", async (req, res) => {
   try {
 
-    const { browser, webPage } = setUp(req.query)
+    const { browser, webPage } = await setUp(req.query)
 
     const img = await webPage.screenshot({
       fullPage: true
