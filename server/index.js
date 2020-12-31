@@ -2,6 +2,9 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 const app = express();
 
+// config
+const PORT = process.env.PORT || 3000;
+
 const setUp = async (settings) => {
   const { url } = settings;
 
@@ -75,6 +78,6 @@ app.get("/img", async (req, res) => {
 })
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log("Server OK");
 });
