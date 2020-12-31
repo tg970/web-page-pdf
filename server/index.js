@@ -9,7 +9,8 @@ const setUp = async (settings) => {
   const { target } = settings;
 
   const browser = await puppeteer.launch({
-      headless: true
+      headless: true,
+      args: ['--no-sandbox'],
   });
 
   const webPage = await browser.newPage();
